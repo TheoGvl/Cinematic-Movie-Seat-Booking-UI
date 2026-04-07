@@ -64,7 +64,7 @@ def main(page: ft.Page):
             height=30,
             bgcolor=color,
             border_radius=8, # Softly rounded edges
-            margin=ft.margin.all(4),
+            margin=ft.Margin.all(4), # UPDATED: Capitalized Margin for Flet 0.80+
             data=status, # Store the status inside the object for easy access
             on_click=seat_clicked,
             
@@ -88,7 +88,8 @@ def main(page: ft.Page):
             end=ft.Alignment(0, 1),
             colors=["#00D1FF", "#121212"]
         ),
-        border_radius=ft.border_radius.only(top_left=50, top_right=50),
+        # UPDATED: Capitalized BorderRadius for Flet 0.80+
+        border_radius=ft.BorderRadius.only(top_left=50, top_right=50), 
         shadow=ft.BoxShadow(spread_radius=5, blur_radius=50, color="#4D00D1FF")
     )
 
@@ -96,13 +97,13 @@ def main(page: ft.Page):
     seat_rows = []
     for row in range(7): # 7 Rows deep
         row_seats = []
-        for col in range(9): # Reduced to 9 columns for a perfect fit (4 seats, 1 aisle, 4 seats)
+        for col in range(9): # 9 columns for a perfect fit
             
             # Create a physical "Aisle" down the exact center
             if col == 4:
                 row_seats.append(ft.Container(width=25)) 
                 
-            # Randomly pre-reserve some seats (30% chance) to make it look like a real app
+            # Randomly pre-reserve some seats to make it look like a real app
             is_res = random.random() < 0.3 
             row_seats.append(create_seat(is_res))
             
@@ -125,7 +126,7 @@ def main(page: ft.Page):
         spacing=20
     )
 
-    # Checkout Bar UI Elements (isolated variables to satisfy Pylance typing)
+    # Checkout Bar UI Elements, isolated variables to satisfy Pylance typing
     selected_text = ft.Text("Selected: 0 seats", size=14, color="#8E8E93")
     total_text = ft.Text("Total: $0", size=24, weight=ft.FontWeight.BOLD, color="#FFFFFF")
     book_btn_text = ft.Text("BOOK TICKETS", weight=ft.FontWeight.BOLD, color="#000000")
@@ -137,7 +138,7 @@ def main(page: ft.Page):
             # Loop through all seats and lock in the selected ones
             for seat in all_seats_list:
                 if seat.data == "selected":
-                    seat.bgcolor = "#B71C1C" # Turn them Red (Reserved)
+                    seat.bgcolor = "#B71C1C" # Turn them Red
                     seat.data = "reserved"
                     seat.scale = ft.Scale(scale=1.0) # Flatten them out
             
@@ -159,7 +160,8 @@ def main(page: ft.Page):
     book_btn = ft.Container(
         content=book_btn_text, 
         bgcolor="#00D1FF",
-        padding=ft.padding.symmetric(horizontal=30, vertical=15),
+        # Capitalized Padding for Flet 0.80+
+        padding=ft.Padding.symmetric(horizontal=30, vertical=15), 
         border_radius=10,
         ink=True, # Ripple effect on click
         on_click=attempt_booking 
